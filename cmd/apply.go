@@ -9,6 +9,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	configFile string
+)
+
 var applyCmd = &cobra.Command{
 	Use:   "apply",
 	Short: "Create symlinks",
@@ -16,7 +20,7 @@ var applyCmd = &cobra.Command{
 }
 
 func runApply(cmd *cobra.Command, args []string) error {
-	cfg, err := config.Load("dotfiles.yaml")
+	cfg, err := config.Load(configFile)
 	if err != nil {
 		return fmt.Errorf("failed to load config file: %w", err)
 	}
@@ -49,4 +53,8 @@ func runApply(cmd *cobra.Command, args []string) error {
 	}
 
 	return nil
+}
+
+func init() {
+	applyCmd.Flags().StringVarP(&configFile, "config-file", "c", "dotfiles.yaml", "config file path")
 }
