@@ -1,3 +1,0 @@
-symlinks:
-  - src: /workspaces/workspace/hello.txt
-    dst: ~/hello.txt
