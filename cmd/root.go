@@ -21,10 +21,13 @@ multiple times.
 
 Example configuration (dotfiles.yaml):
     symlinks:
+      - src: bash/bashrc
+        dst: ~/.bashrc
       - src: vim/vimrc
         dst: ~/.vimrc
-      - src: fish/config.fish
-        dst: ~/.config/fish/config.fish`,
+      - src: vim/vim
+        dst: ~/.vim
+`,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
