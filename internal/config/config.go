@@ -19,11 +19,17 @@ type GitSubmodule struct {
 	URL  string `yaml:"url"`
 }
 
+type Homebrew struct {
+	Formulae []string `yaml:"formulae"`
+	Casks    []string `yaml:"casks"`
+}
+
 // Config represents the root configuration structure
 type Config struct {
 	Symlinks      []Symlink      `yaml:"symlinks"`
 	GitSubmodules []GitSubmodule `yaml:"git_submodules"`
 	AptPackages   []string       `yaml:"apt_packages"`
+	Homebrew      Homebrew       `yaml:"homebrew"`
 }
 
 // Load reads and parses the configuration file

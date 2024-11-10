@@ -5,6 +5,8 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
+	"strings"
 
 	"github.com/spesnova/dotkeeper/internal/config"
 	"github.com/spf13/cobra"
@@ -29,27 +31,42 @@ func runApply(cmd *cobra.Command, args []string) error {
 	}
 
 	// Create symlinks
-	fmt.Println("-----> Creating symlinks...")
 	if err := createSymlinks(cfg.Symlinks); err != nil {
 		return fmt.Errorf("failed to create symlinks: %w", err)
 	}
 
 	// Initialize git submodules
-	fmt.Println("-----> Initializing git submodules...")
 	if err := initSubmodules(cfg.GitSubmodules); err != nil {
 		return fmt.Errorf("failed to initialize git submodules: %w", err)
 	}
 
 	// Install apt packages
-	fmt.Println("-----> Installing apt packages...")
-	if err := installAptPackages(cfg.AptPackages); err != nil {
-		return fmt.Errorf("failed to install apt packages: %w", err)
+	if isDebianBased() {
+		if err := installAptPackages(cfg.AptPackages); err != nil {
+			return fmt.Errorf("failed to install apt packages: %w", err)
+		}
+	}
+
+	if isMacOS() {
+		if err := installHomebrewFormulae(cfg.Homebrew.Formulae); err != nil {
+			return fmt.Errorf("failed to install Homebrew formulae: %w", err)
+		}
+
+		if err := installHomebrewCasks(cfg.Homebrew.Casks); err != nil {
+			return fmt.Errorf("failed to install Homebrew casks: %w", err)
+		}
 	}
 
 	return nil
 }
 
 func createSymlinks(symlinks []config.Symlink) error {
+	if len(symlinks) == 0 {
+		return nil
+	}
+
+	fmt.Println("-----> Creating symlinks...")
+
 	for i, link := range symlinks {
 		// Create target directory if it doesn't exist
 		if err := os.MkdirAll(filepath.Dir(link.Dst), 0755); err != nil {
@@ -85,6 +102,8 @@ func initSubmodules(submodules []config.GitSubmodule) error {
 		return nil
 	}
 
+	fmt.Println("-----> Initializing git submodules...")
+
 	// Check if current directory is a git repository
 	checkCmd := exec.Command("git", "status")
 	if err := checkCmd.Run(); err != nil {
@@ -119,6 +138,12 @@ func initSubmodules(submodules []config.GitSubmodule) error {
 }
 
 func installAptPackages(packages []string) error {
+	if len(packages) == 0 {
+		return nil
+	}
+
+	fmt.Println("-----> Installing apt packages...")
+
 	// Update apt
 	updateCmd := exec.Command("sudo", "apt-get", "update")
 	updateCmd.Stdout = os.Stdout
@@ -138,6 +163,81 @@ func installAptPackages(packages []string) error {
 	}
 
 	return nil
+}
+
+func installHomebrewFormulae(packages []string) error {
+	if len(packages) == 0 {
+		return nil
+	}
+
+	fmt.Println("-----> Installing Homebrew formulae...")
+
+	// Update Homebrew
+	updateCmd := exec.Command("brew", "update")
+	updateCmd.Stdout = os.Stdout
+	updateCmd.Stderr = os.Stderr
+	if err := updateCmd.Run(); err != nil {
+		return fmt.Errorf("failed to update Homebrew: %w", err)
+	}
+
+	// Install formulae
+	args := append([]string{"install"}, packages...)
+	installCmd := exec.Command("brew", args...)
+	fmt.Println(installCmd.String())
+	installCmd.Stdout = os.Stdout
+	installCmd.Stderr = os.Stderr
+	if err := installCmd.Run(); err != nil {
+		return fmt.Errorf("failed to install formulae: %w", err)
+	}
+
+	return nil
+}
+
+func installHomebrewCasks(packages []string) error {
+	if len(packages) == 0 {
+		return nil
+	}
+
+	fmt.Println("-----> Installing Homebrew casks...")
+
+	// Update Homebrew
+	updateCmd := exec.Command("brew", "update")
+	updateCmd.Stdout = os.Stdout
+	updateCmd.Stderr = os.Stderr
+	if err := updateCmd.Run(); err != nil {
+		return fmt.Errorf("failed to update Homebrew: %w", err)
+	}
+
+	// Install casks
+	args := append([]string{"install", "--casks"}, packages...)
+	installCmd := exec.Command("brew", args...)
+	fmt.Println(installCmd.String())
+	installCmd.Stdout = os.Stdout
+	installCmd.Stderr = os.Stderr
+	if err := installCmd.Run(); err != nil {
+		return fmt.Errorf("failed to install casks: %w", err)
+	}
+
+	return nil
+}
+
+func isMacOS() bool {
+	return runtime.GOOS == "darwin"
+}
+
+func isDebianBased() bool {
+	if runtime.GOOS != "linux" {
+		return false
+	}
+
+	// /etc/os-releaseファイルを読み込んで確認
+	data, err := os.ReadFile("/etc/os-release")
+	if err != nil {
+		return false
+	}
+
+	content := string(data)
+	return strings.Contains(content, "ID=ubuntu") || strings.Contains(content, "ID=debian")
 }
 
 func init() {

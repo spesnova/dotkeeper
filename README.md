@@ -61,3 +61,13 @@ apt_packages:
   - git
   - fish
 ```
+
+#### Homebrew Packages
+```yaml
+homebrew:
+  formulae:
+    - git
+    - fish
+  casks:
+  - google-chrome
+```
