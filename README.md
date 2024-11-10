@@ -118,5 +118,8 @@ You can specify the path to the configuration file.
 $ dotkeeper apply -c ~/path/to/dotkeeper.yaml
 ```
 
+## Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
