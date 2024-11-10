@@ -34,10 +34,10 @@ func runApply(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("failed to create symlinks: %w", err)
 	}
 
-	// Initialize submodules
-	fmt.Println("-----> Initializing submodules...")
-	if err := initSubmodules(cfg.Submodules); err != nil {
-		return fmt.Errorf("failed to initialize submodules: %w", err)
+	// Initialize git submodules
+	fmt.Println("-----> Initializing git submodules...")
+	if err := initSubmodules(cfg.GitSubmodules); err != nil {
+		return fmt.Errorf("failed to initialize git submodules: %w", err)
 	}
 
 	// Install apt packages
@@ -80,7 +80,7 @@ func createSymlinks(symlinks []config.Symlink) error {
 	return nil
 }
 
-func initSubmodules(submodules []config.Submodule) error {
+func initSubmodules(submodules []config.GitSubmodule) error {
 	if len(submodules) == 0 {
 		return nil
 	}

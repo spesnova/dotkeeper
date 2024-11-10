@@ -48,7 +48,7 @@ symlinks:
   - src: vim/vim
     dst: ~/.vim
 
-submodules:
+git_submodules:
   - path: vim/vim/pack/plugins/start/lightline
     url: https://github.com/itchyny/lightline.vim.git
   - path: vim/vim/bundle/nerdtree

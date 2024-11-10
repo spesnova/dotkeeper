@@ -13,17 +13,17 @@ type Symlink struct {
 	Dst string `yaml:"dst"`
 }
 
-// Submodule represents a git submodule configuration
-type Submodule struct {
+// GitSubmodule represents a git submodule configuration
+type GitSubmodule struct {
 	Path string `yaml:"path"`
 	URL  string `yaml:"url"`
 }
 
 // Config represents the root configuration structure
 type Config struct {
-	Symlinks    []Symlink   `yaml:"symlinks"`
-	Submodules  []Submodule `yaml:"submodules"`
-	AptPackages []string    `yaml:"apt_packages"`
+	Symlinks      []Symlink      `yaml:"symlinks"`
+	GitSubmodules []GitSubmodule `yaml:"git_submodules"`
+	AptPackages   []string       `yaml:"apt_packages"`
 }
 
 // Load reads and parses the configuration file
