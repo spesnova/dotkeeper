@@ -55,3 +55,9 @@ submodules:
     url: https://github.com/preservim/nerdtree.git
 ```
 
+#### Apt Packages
+```yaml
+apt_packages:
+  - git
+  - fish
+```

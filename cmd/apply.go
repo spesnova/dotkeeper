@@ -21,18 +21,36 @@ var applyCmd = &cobra.Command{
 }
 
 func runApply(cmd *cobra.Command, args []string) error {
+	// Load config file
+	fmt.Printf("-----> Loading config file: %s\n", configFile)
 	cfg, err := config.Load(configFile)
 	if err != nil {
 		return fmt.Errorf("failed to load config file: %w", err)
 	}
 
+	// Create symlinks
+	fmt.Println("-----> Creating symlinks...")
+	if err := createSymlinks(cfg.Symlinks); err != nil {
+		return fmt.Errorf("failed to create symlinks: %w", err)
+	}
+
 	// Initialize submodules
+	fmt.Println("-----> Initializing submodules...")
 	if err := initSubmodules(cfg.Submodules); err != nil {
 		return fmt.Errorf("failed to initialize submodules: %w", err)
 	}
 
-	// Create symlinks
-	for i, link := range cfg.Symlinks {
+	// Install apt packages
+	fmt.Println("-----> Installing apt packages...")
+	if err := installAptPackages(cfg.AptPackages); err != nil {
+		return fmt.Errorf("failed to install apt packages: %w", err)
+	}
+
+	return nil
+}
+
+func createSymlinks(symlinks []config.Symlink) error {
+	for i, link := range symlinks {
 		// Create target directory if it doesn't exist
 		if err := os.MkdirAll(filepath.Dir(link.Dst), 0755); err != nil {
 			return fmt.Errorf("failed to create directory for symlink %d: %w", i+1, err)
@@ -70,6 +88,7 @@ func initSubmodules(submodules []config.Submodule) error {
 	// Check if current directory is a git repository
 	checkCmd := exec.Command("git", "status")
 	if err := checkCmd.Run(); err != nil {
+		fmt.Println(err)
 		return fmt.Errorf("current directory is not a git repository: %w", err)
 	}
 
@@ -94,6 +113,28 @@ func initSubmodules(submodules []config.Submodule) error {
 		}
 
 		fmt.Printf("Initialized submodule: %s\n", sub.Path)
+	}
+
+	return nil
+}
+
+func installAptPackages(packages []string) error {
+	// Update apt
+	updateCmd := exec.Command("sudo", "apt-get", "update")
+	updateCmd.Stdout = os.Stdout
+	updateCmd.Stderr = os.Stderr
+	if err := updateCmd.Run(); err != nil {
+		return fmt.Errorf("failed to update apt: %w", err)
+	}
+
+	// Install packages
+	args := append([]string{"apt-get", "install", "-y"}, packages...)
+	installCmd := exec.Command("sudo", args...)
+	installCmd.Stdout = os.Stdout
+	installCmd.Stderr = os.Stderr
+
+	if err := installCmd.Run(); err != nil {
+		return fmt.Errorf("failed to install packages: %w", err)
 	}
 
 	return nil

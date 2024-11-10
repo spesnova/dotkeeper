@@ -21,8 +21,9 @@ type Submodule struct {
 
 // Config represents the root configuration structure
 type Config struct {
-	Symlinks   []Symlink   `yaml:"symlinks"`
-	Submodules []Submodule `yaml:"submodules"`
+	Symlinks    []Symlink   `yaml:"symlinks"`
+	Submodules  []Submodule `yaml:"submodules"`
+	AptPackages []string    `yaml:"apt_packages"`
 }
 
 // Load reads and parses the configuration file
