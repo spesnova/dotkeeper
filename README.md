@@ -103,7 +103,7 @@ homebrew:
     - git
     - fish
   casks:
-  - google-chrome
+    - google-chrome
 ```
 
 ### Commands
