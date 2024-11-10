@@ -15,18 +15,7 @@ var rootCmd = &cobra.Command{
 	Short: "A declarative dotfiles management tool",
 	Long: `dotkeeper is a command-line tool for managing your dotfiles declaratively.
 
-It creates and manages symbolic links based on the configuration defined in your
-dotfiles.yaml file. The tool ensures idempotent operations, making it safe to run
-multiple times.
-
-Example configuration (dotfiles.yaml):
-    symlinks:
-      - src: bash/bashrc
-        dst: ~/.bashrc
-      - src: vim/vimrc
-        dst: ~/.vimrc
-      - src: vim/vim
-        dst: ~/.vim
+See https://github.com/spesnova/dotkeeper/blob/main/README.md for more details.
 `,
 }
 
