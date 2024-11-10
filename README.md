@@ -4,6 +4,7 @@ dotkeeper is a tiny tool for managing dotfiles declaratively.
 ## Table of Contents
 - [Getting Started](#getting-started)
 - [Reference](#reference)
+- [Contributing](#contributing)
 - [License](#license)
 
 ## Getting Started
