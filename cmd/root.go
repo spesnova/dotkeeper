@@ -15,7 +15,7 @@ var rootCmd = &cobra.Command{
 	Short: "A declarative dotfiles management tool",
 	Long: `dotkeeper is a command-line tool for managing your dotfiles declaratively.
 
-See https://github.com/spesnova/dotkeeper/blob/main/README.md for more details.
+See https://github.com/spesnova/dotkeeper for more details.
 `,
 }
 
