@@ -19,6 +19,10 @@ var (
 	configFile string
 )
 
+const (
+	ConfigFile = "dotkeeper.yaml"
+)
+
 var applyCmd = &cobra.Command{
 	Use:   "apply",
 	Short: "Create symlinks and initialize git submodules",
@@ -88,5 +92,5 @@ func isDebianBased() bool {
 }
 
 func init() {
-	applyCmd.Flags().StringVarP(&configFile, "config-file", "c", "dotfiles.yaml", "config file path")
+	applyCmd.Flags().StringVarP(&configFile, "config-file", "c", ConfigFile, "config file path")
 }
