@@ -9,6 +9,8 @@ import (
 	"strings"
 
 	"github.com/spesnova/dotkeeper/internal/config"
+	"github.com/spesnova/dotkeeper/internal/homebrew"
+	"github.com/spesnova/dotkeeper/internal/mas"
 	"github.com/spf13/cobra"
 )
 
@@ -48,15 +50,13 @@ func runApply(cmd *cobra.Command, args []string) error {
 	}
 
 	if isMacOS() {
-		if err := installHomebrewFormulae(cfg.Homebrew.Formulae); err != nil {
-			return fmt.Errorf("failed to install Homebrew formulae: %w", err)
+		brewManager := homebrew.NewManager()
+		if err := brewManager.Install(cfg.Homebrew.Formulae, cfg.Homebrew.Casks); err != nil {
+			return fmt.Errorf("failed to install Homebrew packages: %w", err)
 		}
 
-		if err := installHomebrewCasks(cfg.Homebrew.Casks); err != nil {
-			return fmt.Errorf("failed to install Homebrew casks: %w", err)
-		}
-
-		if err := mas.Install(cfg.MAS.AppIDs); err != nil {
+		masManager := mas.NewManager()
+		if err := masManager.Install(cfg.MAS.AppIDs); err != nil {
 			return fmt.Errorf("failed to install Mac App Store apps: %w", err)
 		}
 	}
@@ -164,62 +164,6 @@ func installAptPackages(packages []string) error {
 
 	if err := installCmd.Run(); err != nil {
 		return fmt.Errorf("failed to install packages: %w", err)
-	}
-
-	return nil
-}
-
-func installHomebrewFormulae(packages []string) error {
-	if len(packages) == 0 {
-		return nil
-	}
-
-	fmt.Println("-----> Installing Homebrew formulae...")
-
-	// Update Homebrew
-	updateCmd := exec.Command("brew", "update")
-	updateCmd.Stdout = os.Stdout
-	updateCmd.Stderr = os.Stderr
-	if err := updateCmd.Run(); err != nil {
-		return fmt.Errorf("failed to update Homebrew: %w", err)
-	}
-
-	// Install formulae
-	args := append([]string{"install"}, packages...)
-	installCmd := exec.Command("brew", args...)
-	fmt.Println(installCmd.String())
-	installCmd.Stdout = os.Stdout
-	installCmd.Stderr = os.Stderr
-	if err := installCmd.Run(); err != nil {
-		return fmt.Errorf("failed to install formulae: %w", err)
-	}
-
-	return nil
-}
-
-func installHomebrewCasks(packages []string) error {
-	if len(packages) == 0 {
-		return nil
-	}
-
-	fmt.Println("-----> Installing Homebrew casks...")
-
-	// Update Homebrew
-	updateCmd := exec.Command("brew", "update")
-	updateCmd.Stdout = os.Stdout
-	updateCmd.Stderr = os.Stderr
-	if err := updateCmd.Run(); err != nil {
-		return fmt.Errorf("failed to update Homebrew: %w", err)
-	}
-
-	// Install casks
-	args := append([]string{"install", "--casks"}, packages...)
-	installCmd := exec.Command("brew", args...)
-	fmt.Println(installCmd.String())
-	installCmd.Stdout = os.Stdout
-	installCmd.Stderr = os.Stderr
-	if err := installCmd.Run(); err != nil {
-		return fmt.Errorf("failed to install casks: %w", err)
 	}
 
 	return nil
