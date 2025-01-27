@@ -14,19 +14,19 @@ type Version string
 
 // Symlink represents a single symlink configuration
 type Symlink struct {
-	Src string `yaml:"src"`
-	Dst string `yaml:"dst"`
+	Src string `yaml:"src,omitempty"`
+	Dst string `yaml:"dst,omitempty"`
 }
 
 // GitSubmodule represents a git submodule configuration
 type GitSubmodule struct {
-	Path string `yaml:"path"`
-	URL  string `yaml:"url"`
+	Path string `yaml:"path,omitempty"`
+	URL  string `yaml:"url,omitempty"`
 }
 
 type Homebrew struct {
-	Formulae []string `yaml:"formulae"`
-	Casks    []string `yaml:"casks"`
+	Formulae []string `yaml:"formulae,omitempty"`
+	Casks    []string `yaml:"casks,omitempty"`
 }
 
 // MASConfig represents the MAS configuration structure
@@ -37,11 +37,11 @@ type MASConfig struct {
 // Config represents the root configuration structure
 type Config struct {
 	Version       Version        `yaml:"version"`
-	Symlinks      []Symlink      `yaml:"symlinks"`
-	GitSubmodules []GitSubmodule `yaml:"git_submodules"`
-	AptPackages   []string       `yaml:"apt_packages"`
-	Homebrew      Homebrew       `yaml:"homebrew"`
-	MAS           MASConfig      `yaml:"mas"`
+	Symlinks      []Symlink      `yaml:"symlinks,omitempty"`
+	GitSubmodules []GitSubmodule `yaml:"git_submodules,omitempty"`
+	AptPackages   []string       `yaml:"apt_packages,omitempty"`
+	Homebrew      Homebrew       `yaml:"homebrew,omitempty"`
+	MAS           MASConfig      `yaml:"mas,omitempty"`
 }
 
 // Load reads and parses the configuration file
