@@ -9,6 +9,8 @@ dotkeeper is a tiny tool for managing dotfiles declaratively.
 
 ## Getting Started
 ### Prerequisites
+- [Git](https://git-scm.com/)
+
 If you are on macOS, you need to install the following tools:
 - [Homebrew](https://brew.sh/)
 - [mas](https://github.com/mas-cli/mas)

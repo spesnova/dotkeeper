@@ -10,6 +10,7 @@ import (
 
 	"github.com/spesnova/dotkeeper/internal/apt"
 	"github.com/spesnova/dotkeeper/internal/config"
+	"github.com/spesnova/dotkeeper/internal/git"
 	"github.com/spesnova/dotkeeper/internal/homebrew"
 	"github.com/spesnova/dotkeeper/internal/mas"
 	"github.com/spf13/cobra"
@@ -39,7 +40,8 @@ func runApply(cmd *cobra.Command, args []string) error {
 	}
 
 	// Initialize git submodules
-	if err := initSubmodules(cfg.GitSubmodules); err != nil {
+	submoduleManager := git.NewSubmoduleManager()
+	if err := submoduleManager.Install(cfg.GitSubmodules); err != nil {
 		return fmt.Errorf("failed to initialize git submodules: %w", err)
 	}
 
