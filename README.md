@@ -9,8 +9,35 @@ dotkeeper is a tiny tool for managing dotfiles declaratively.
 
 ## Getting Started
 ### STEP1. Install dotkeeper
-First, install dotkeeper.
+Get the binary from the [Releases](https://github.com/spesnova/dotkeeper/releases) page.
+
 ```bash
+# Linux AMD64
+$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.1.0/dotkeeper-linux-amd64 -o dotkeeper
+
+# Linux ARM64
+$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.1.0/dotkeeper-linux-arm64 -o dotkeeper
+
+# MacOS AMD64
+$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.1.0/dotkeeper-darwin-amd64 -o dotkeeper
+
+# MacOS ARM64
+$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.1.0/dotkeeper-darwin-arm64 -o dotkeeper
+```
+
+Then, extract the binary and move it to `/usr/local/bin`.
+
+```bash
+$ tar -xzf dotkeeper.tar.gz
+$ sudo mv dotkeeper /usr/local/bin/
+$ chmod +x /usr/local/bin/dotkeeper
+```
+
+Check if the binary is installed correctly.
+
+```bash
+$ dotkeeper version
+v0.1.0
 ```
 
 ### STEP2. Create configurationa file
