@@ -22,6 +22,8 @@ $ touch dotkeeper.yaml
 ```
 
 ```yaml
+version: v0
+
 symlinks:
   - src: bash/bashrc
     dst: ~/.bashrc
@@ -61,7 +63,16 @@ It will:
 - install Homebrew packages if you are on macOS
 
 ## Reference
-### Configuration
+### Configuration (v0)
+#### Version
+The schema version of the configuration file. 
+
+```yaml
+version: v0
+```
+
+This version is used to validate the configuration file against the CLI version. This version must be a major version of the CLI version.
+
 #### Symlinks
 A single file can be symlinked to another location.
 ```yaml
@@ -117,6 +128,13 @@ $ dotkeeper apply
 You can specify the path to the configuration file.
 ```bash
 $ dotkeeper apply -c ~/path/to/dotkeeper.yaml
+```
+
+#### `dotkeeper version`
+Show the version of the CLI.
+```bash
+$ dotkeeper version
+v0.1.0
 ```
 
 ## Contributing

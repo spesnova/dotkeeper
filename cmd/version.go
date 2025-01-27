@@ -3,10 +3,9 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/spesnova/dotkeeper/internal/version"
 	"github.com/spf13/cobra"
 )
-
-const VERSION = "v0.1.0"
 
 var versionCmd = &cobra.Command{
 	Use:   "version",
@@ -15,6 +14,6 @@ var versionCmd = &cobra.Command{
 }
 
 func runVersion(cmd *cobra.Command, args []string) error {
-	fmt.Println(VERSION)
+	fmt.Println(version.GetVersion())
 	return nil
 }

@@ -5,15 +5,12 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/spesnova/dotkeeper/internal/version"
 	"gopkg.in/yaml.v3"
 )
 
-const (
-	SCHEMA_VERSION = "v0.1.0"
-)
-
 // SchemaVersion represents the schema version of the configuration file
-type SchemaVersion string
+type Version string
 
 // Symlink represents a single symlink configuration
 type Symlink struct {
@@ -34,7 +31,7 @@ type Homebrew struct {
 
 // Config represents the root configuration structure
 type Config struct {
-	SchemaVersion SchemaVersion  `yaml:"schema_version"`
+	Version       Version        `yaml:"version"`
 	Symlinks      []Symlink      `yaml:"symlinks"`
 	GitSubmodules []GitSubmodule `yaml:"git_submodules"`
 	AptPackages   []string       `yaml:"apt_packages"`
@@ -53,8 +50,8 @@ func Load(path string) (*Config, error) {
 		return nil, err
 	}
 
-	if config.SchemaVersion != SchemaVersion(SCHEMA_VERSION) {
-		return nil, fmt.Errorf("unsupported schema version: %s (current version: %s)", config.SchemaVersion, SCHEMA_VERSION)
+	if err := config.ValidateVersion(version.GetVersion()); err != nil {
+		return nil, err
 	}
 
 	// Expand home directory (~) in paths
@@ -77,4 +74,20 @@ func expandPath(path string) string {
 	}
 
 	return filepath.Join(home, path[1:])
+}
+
+// ValidateVersion validates the version of the config file against the CLI version
+func (c *Config) ValidateVersion(cliVersion string) error {
+	if c.Version == "" {
+		return nil // Skip version validation if not specified
+	}
+
+	configMajorVersion := string(c.Version)[1:2]
+	cliMajorVersion := string(cliVersion)[1:2]
+
+	if configMajorVersion != cliMajorVersion {
+		return fmt.Errorf("config file version (%s) does not match CLI version (%s). Major versions must match", c.Version, cliVersion)
+	}
+
+	return nil
 }

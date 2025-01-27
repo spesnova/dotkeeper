@@ -4,6 +4,7 @@
 
 - [Golang](https://golang.org)
 - [GitHub CLI](https://cli.github.com/)
+- [GoReleaser](https://goreleaser.com/)
 
 ### 1. Clone this repo.
 ```bash
@@ -16,7 +17,7 @@ $ cd dotkeeper
 $ go mod tidy
 ```
 
-## How to
+## Tasks
 ### Running the app
 ```bash
 $ go run main.go
@@ -26,6 +27,12 @@ $ go run main.go
 ```bash
 $ go test ./...
 ```
+
+### Versioning
+This CLI follows [Semantic Versioning](https://semver.org/).
+
+- Update the version in `internal/version/version.go`
+- Update the version in `README.md`
 
 ### Building binaries
 
