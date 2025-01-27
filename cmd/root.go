@@ -30,4 +30,5 @@ func Execute() {
 
 func init() {
 	rootCmd.AddCommand(applyCmd)
+	rootCmd.AddCommand(versionCmd)
 }
