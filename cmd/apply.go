@@ -55,6 +55,10 @@ func runApply(cmd *cobra.Command, args []string) error {
 		if err := installHomebrewCasks(cfg.Homebrew.Casks); err != nil {
 			return fmt.Errorf("failed to install Homebrew casks: %w", err)
 		}
+
+		if err := mas.Install(cfg.MAS.AppIDs); err != nil {
+			return fmt.Errorf("failed to install Mac App Store apps: %w", err)
+		}
 	}
 
 	return nil

@@ -72,6 +72,10 @@ homebrew:
   casks:
     - google-chrome
 
+mas:
+  app_ids:
+    - 497799835 # Xcode
+
 apt_packages:
   - git
   - fish
@@ -88,6 +92,7 @@ It will:
 - initialize git submodules
 - install apt packages if you are on Ubuntu/Debian
 - install Homebrew packages if you are on macOS
+- install Mac App Store applications if you are on macOS
 
 ## Reference
 ### Configuration (v0)
@@ -143,6 +148,13 @@ homebrew:
     - fish
   casks:
     - google-chrome
+```
+
+#### Mac App Store Applications
+```yaml
+mas:
+  app_ids:
+    - 497799835 # Xcode
 ```
 
 ### Commands

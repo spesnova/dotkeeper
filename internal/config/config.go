@@ -29,6 +29,11 @@ type Homebrew struct {
 	Casks    []string `yaml:"casks"`
 }
 
+// MASConfig represents the MAS configuration structure
+type MASConfig struct {
+	AppIDs []string `yaml:"app_ids,omitempty"`
+}
+
 // Config represents the root configuration structure
 type Config struct {
 	Version       Version        `yaml:"version"`
@@ -36,6 +41,7 @@ type Config struct {
 	GitSubmodules []GitSubmodule `yaml:"git_submodules"`
 	AptPackages   []string       `yaml:"apt_packages"`
 	Homebrew      Homebrew       `yaml:"homebrew"`
+	MAS           MASConfig      `yaml:"mas"`
 }
 
 // Load reads and parses the configuration file
