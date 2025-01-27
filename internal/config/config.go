@@ -1,11 +1,19 @@
 package config
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 
 	"gopkg.in/yaml.v3"
 )
+
+const (
+	SCHEMA_VERSION = "v0.1.0"
+)
+
+// SchemaVersion represents the schema version of the configuration file
+type SchemaVersion string
 
 // Symlink represents a single symlink configuration
 type Symlink struct {
@@ -26,6 +34,7 @@ type Homebrew struct {
 
 // Config represents the root configuration structure
 type Config struct {
+	SchemaVersion SchemaVersion  `yaml:"schema_version"`
 	Symlinks      []Symlink      `yaml:"symlinks"`
 	GitSubmodules []GitSubmodule `yaml:"git_submodules"`
 	AptPackages   []string       `yaml:"apt_packages"`
@@ -42,6 +51,10 @@ func Load(path string) (*Config, error) {
 	var config Config
 	if err := yaml.Unmarshal(data, &config); err != nil {
 		return nil, err
+	}
+
+	if config.SchemaVersion != SchemaVersion(SCHEMA_VERSION) {
+		return nil, fmt.Errorf("unsupported schema version: %s (current version: %s)", config.SchemaVersion, SCHEMA_VERSION)
 	}
 
 	// Expand home directory (~) in paths
