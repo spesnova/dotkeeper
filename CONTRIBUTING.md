@@ -47,7 +47,7 @@ This CLI follows [Semantic Versioning](https://semver.org/).
 goreleaser is used to build binaries.
 
 ```bash
-$ goreleaser build --snapshot --rm-dist
+$ goreleaser build --snapshot
 ```
 
 #### Building binaries manually
@@ -81,5 +81,5 @@ $ git push origin v0.1.0
 Then, release the binaries to GitHub.
 
 ```bash
-$ goreleaser release --snapshot --rm-dist
+$ goreleaser release 
 ```
