@@ -28,5 +28,8 @@ go.work.sum
 test/# Added by goreleaser init:
 dist/
 
+# binaries
+bin/
+
 # GitHub token
 .github_token

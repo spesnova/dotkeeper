@@ -8,6 +8,7 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/spesnova/dotkeeper/internal/apt"
 	"github.com/spesnova/dotkeeper/internal/config"
 	"github.com/spesnova/dotkeeper/internal/homebrew"
 	"github.com/spesnova/dotkeeper/internal/mas"
@@ -44,7 +45,8 @@ func runApply(cmd *cobra.Command, args []string) error {
 
 	// Install apt packages
 	if isDebianBased() {
-		if err := installAptPackages(cfg.AptPackages); err != nil {
+		aptManager := apt.NewManager()
+		if err := aptManager.Install(cfg.AptPackages); err != nil {
 			return fmt.Errorf("failed to install apt packages: %w", err)
 		}
 	}
@@ -136,34 +138,6 @@ func initSubmodules(submodules []config.GitSubmodule) error {
 		}
 
 		fmt.Printf("Initialized submodule: %s\n", sub.Path)
-	}
-
-	return nil
-}
-
-func installAptPackages(packages []string) error {
-	if len(packages) == 0 {
-		return nil
-	}
-
-	fmt.Println("-----> Installing apt packages...")
-
-	// Update apt
-	updateCmd := exec.Command("sudo", "apt-get", "update")
-	updateCmd.Stdout = os.Stdout
-	updateCmd.Stderr = os.Stderr
-	if err := updateCmd.Run(); err != nil {
-		return fmt.Errorf("failed to update apt: %w", err)
-	}
-
-	// Install packages
-	args := append([]string{"apt-get", "install", "-y"}, packages...)
-	installCmd := exec.Command("sudo", args...)
-	installCmd.Stdout = os.Stdout
-	installCmd.Stderr = os.Stderr
-
-	if err := installCmd.Run(); err != nil {
-		return fmt.Errorf("failed to install packages: %w", err)
 	}
 
 	return nil
