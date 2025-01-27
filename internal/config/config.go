@@ -96,7 +96,7 @@ func expandPath(path string) string {
 // ValidateVersion validates the version of the config file against the CLI version
 func (c *Config) ValidateVersion(cliVersion string) error {
 	if c.Version == "" {
-		return nil // Skip version validation if not specified
+		return fmt.Errorf("version field is required in the configuration file")
 	}
 
 	configMajorVersion := string(c.Version)[1:2]

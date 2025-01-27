@@ -19,6 +19,8 @@ func (m *Manager) Install(appIDs []string) error {
 		return fmt.Errorf("mas command is not installed. Please install it with 'brew install mas'")
 	}
 
+	fmt.Println("-----> Installing Mac App Store apps...")
+
 	for _, appID := range appIDs {
 		cmd := exec.Command("mas", "install", appID)
 		if err := cmd.Run(); err != nil {
