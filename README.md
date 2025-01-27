@@ -16,20 +16,20 @@ If you are on macOS, you need to install the following tools:
 - [mas](https://github.com/mas-cli/mas)
 
 ### STEP1. Install dotkeeper
-Get the binary from the [Releases](https://github.com/spesnova/dotkeeper/releases) page.
+Get the latest binary from the [Releases](https://github.com/spesnova/dotkeeper/releases) page.
 
 ```bash
-# Linux AMD64
-$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.2.1/dotkeeper-linux-amd64 -o dotkeeper
+# Linux Intel
+$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.2.1/dotkeeper_Linux_x86_64.tar.gz -o dotkeeper.tar.gz
 
-# Linux ARM64
-$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.2.1/dotkeeper-linux-arm64 -o dotkeeper
+# Linux ARM
+$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.2.1/dotkeeper_Linux_arm64.tar.gz -o dotkeeper.tar.gz
 
-# MacOS AMD64
-$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.2.1/dotkeeper-darwin-amd64 -o dotkeeper
+# MacOS Intel
+$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.2.1/dotkeeper_Darwin_x86_64.tar.gz -o dotkeeper.tar.gz
 
-# MacOS ARM64
-$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.2.1/dotkeeper-darwin-arm64 -o dotkeeper
+# MacOS Apple Silicon
+$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.2.1/dotkeeper_Darwin_arm64.tar.gz -o dotkeeper.tar.gz
 ```
 
 Then, extract the binary and move it to `/usr/local/bin`.
