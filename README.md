@@ -20,16 +20,16 @@ Get the binary from the [Releases](https://github.com/spesnova/dotkeeper/release
 
 ```bash
 # Linux AMD64
-$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.1.0/dotkeeper-linux-amd64 -o dotkeeper
+$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.2.1/dotkeeper-linux-amd64 -o dotkeeper
 
 # Linux ARM64
-$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.1.0/dotkeeper-linux-arm64 -o dotkeeper
+$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.2.1/dotkeeper-linux-arm64 -o dotkeeper
 
 # MacOS AMD64
-$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.1.0/dotkeeper-darwin-amd64 -o dotkeeper
+$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.2.1/dotkeeper-darwin-amd64 -o dotkeeper
 
 # MacOS ARM64
-$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.1.0/dotkeeper-darwin-arm64 -o dotkeeper
+$ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.2.1/dotkeeper-darwin-arm64 -o dotkeeper
 ```
 
 Then, extract the binary and move it to `/usr/local/bin`.
@@ -44,7 +44,7 @@ Check if the binary is installed correctly.
 
 ```bash
 $ dotkeeper version
-v0.1.0
+v0.2.1
 ```
 
 ### STEP2. Create configurationa file
@@ -185,7 +185,7 @@ $ dotkeeper apply -c ~/path/to/dotkeeper.yaml
 Show the version of the CLI.
 ```bash
 $ dotkeeper version
-v0.1.0
+v0.2.1
 ```
 
 ## Contributing
