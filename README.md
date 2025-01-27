@@ -142,9 +142,14 @@ git_submodules:
 
 #### Apt Packages
 ```yaml
-apt_packages:
-  - git
-  - fish
+apt:
+  sources:
+    - name: goreleaser
+      uri: deb [trusted=yes] https://repo.goreleaser.com/apt/ /
+  packages:
+    - fish
+    - git
+    - goreleaser
 ```
 
 #### Homebrew Packages

@@ -52,7 +52,7 @@ func runApply(cmd *cobra.Command, args []string) error {
 	// Install apt packages
 	if isDebianBased() {
 		aptManager := apt.NewManager()
-		if err := aptManager.Install(cfg.AptPackages); err != nil {
+		if err := aptManager.Install(cfg.Apt); err != nil {
 			return fmt.Errorf("failed to install apt packages: %w", err)
 		}
 	}
