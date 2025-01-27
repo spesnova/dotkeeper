@@ -27,3 +27,6 @@ go.work.sum
 # test directory
 test/# Added by goreleaser init:
 dist/
+
+# GitHub token
+.github_token
