@@ -81,7 +81,6 @@ func isDebianBased() bool {
 		return false
 	}
 
-	// /etc/os-releaseファイルを読み込んで確認
 	data, err := os.ReadFile("/etc/os-release")
 	if err != nil {
 		return false
