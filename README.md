@@ -16,7 +16,14 @@ If you are on macOS, you need to install the following tools:
 - [mas](https://github.com/mas-cli/mas)
 
 ### STEP1. Install dotkeeper
-Get the latest binary from the [Releases](https://github.com/spesnova/dotkeeper/releases) page.
+Install dotkeeper using homebrew:
+
+```bash
+$ brew tap spesnova/dotkeeper
+$ brew install dotkeeper
+```
+
+or get the latest binary from the [Releases](https://github.com/spesnova/dotkeeper/releases) page.
 
 ```bash
 # Linux Intel
@@ -30,11 +37,8 @@ $ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.2.1/dotkeep
 
 # MacOS Apple Silicon
 $ curl -L https://github.com/spesnova/dotkeeper/releases/download/v0.2.1/dotkeeper_Darwin_arm64.tar.gz -o dotkeeper.tar.gz
-```
 
-Then, extract the binary and move it to `/usr/local/bin`.
-
-```bash
+# Then, extract the binary and move it to `/usr/local/bin`.
 $ tar -xzf dotkeeper.tar.gz
 $ sudo mv dotkeeper /usr/local/bin/
 $ chmod +x /usr/local/bin/dotkeeper
@@ -104,7 +108,7 @@ It will:
 ## Reference
 ### Configuration (v0)
 #### Version
-The schema version of the configuration file. 
+The schema version of the configuration file.
 
 ```yaml
 version: v0
