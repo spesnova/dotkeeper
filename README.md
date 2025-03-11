@@ -87,9 +87,10 @@ mas:
   app_ids:
     - 497799835 # Xcode
 
-apt_packages:
-  - git
-  - fish
+apt:
+  packages:
+    - git
+    - fish
 ```
 
 ### STEP3. Apply configuration
